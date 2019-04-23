@@ -1,13 +1,13 @@
 FROM openjdk:8-jre-alpine
-MAINTAINER CrazyMax <crazy-max@users.noreply.github.com>
 
 ARG BUILD_DATE
 ARG VCS_REF
 ARG VERSION
 
-LABEL org.label-schema.build-date=$BUILD_DATE \
+LABEL maintainer="CrazyMax" \
+  org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.name="jetbrains-license-server" \
-  org.label-schema.description="JetBrains License Server image based on Alpine Linux" \
+  org.label-schema.description="JetBrains License Server" \
   org.label-schema.version=$VERSION \
   org.label-schema.url="https://github.com/crazy-max/docker-jetbrains-license-server" \
   org.label-schema.vcs-ref=$VCS_REF \
@@ -15,16 +15,15 @@ LABEL org.label-schema.build-date=$BUILD_DATE \
   org.label-schema.vendor="CrazyMax" \
   org.label-schema.schema-version="1.0"
 
-RUN apk --update --no-cache add tzdata \
-  && rm -rf /var/cache/apk/* /tmp/*
-
 ENV JLS_PATH="/opt/jetbrains-license-server" \
-  JLS_VERSION="17043" \
-  JLS_SHA256="dbb89efaaebc27b87dd5911429ac1138de3e02a351d47c74855d14db4fafd893"
+  JLS_VERSION="19488" \
+  JLS_SHA256="65abc377efe83e121cafe02196b14efda8e04ef990229d3fa6600186ef264cc4"
 
-ADD entrypoint.sh /entrypoint.sh
+COPY entrypoint.sh /entrypoint.sh
 
-RUN apk --update --no-cache add -t build-dependencies \
+RUN apk --update --no-cache add \
+    tzdata \
+  && apk --update --no-cache add -t build-dependencies \
     curl zip \
   && mkdir -p "$JLS_PATH" \
   && curl -L "https://download.jetbrains.com/lcsrv/license-server-installer.zip" -o "/tmp/jls.zip" \
@@ -37,7 +36,7 @@ RUN apk --update --no-cache add -t build-dependencies \
   && apk del build-dependencies \
   && rm -rf /var/cache/apk/* /tmp/*
 
-EXPOSE 80
+EXPOSE 8000
 VOLUME [ "/data" ]
 
 ENTRYPOINT [ "/entrypoint.sh" ]

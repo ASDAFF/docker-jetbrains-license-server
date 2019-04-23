@@ -2,10 +2,11 @@
 
 <p align="center">
   <a href="https://microbadger.com/images/crazymax/jetbrains-license-server"><img src="https://images.microbadger.com/badges/version/crazymax/jetbrains-license-server.svg?style=flat-square" alt="Version"></a>
-  <a href="https://travis-ci.org/crazy-max/docker-jetbrains-license-server"><img src="https://img.shields.io/travis/crazy-max/docker-jetbrains-license-server/master.svg?style=flat-square" alt="Build Status"></a>
+  <a href="https://travis-ci.com/crazy-max/docker-jetbrains-license-server"><img src="https://img.shields.io/travis/com/crazy-max/docker-jetbrains-license-server/master.svg?style=flat-square" alt="Build Status"></a>
   <a href="https://hub.docker.com/r/crazymax/jetbrains-license-server/"><img src="https://img.shields.io/docker/stars/crazymax/jetbrains-license-server.svg?style=flat-square" alt="Docker Stars"></a>
   <a href="https://hub.docker.com/r/crazymax/jetbrains-license-server/"><img src="https://img.shields.io/docker/pulls/crazymax/jetbrains-license-server.svg?style=flat-square" alt="Docker Pulls"></a>
   <a href="https://quay.io/repository/crazymax/jetbrains-license-server"><img src="https://quay.io/repository/crazymax/jetbrains-license-server/status?style=flat-square" alt="Docker Repository on Quay"></a>
+  <a href="https://www.codacy.com/app/crazy-max/docker-jetbrains-license-server"><img src="https://img.shields.io/codacy/grade/eb420bc3e6ed49ff97cc261602228efa.svg?style=flat-square" alt="Code Quality"></a>
   <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=3BXL8EBDJALHQ"><img src="https://img.shields.io/badge/donate-paypal-7057ff.svg?style=flat-square" alt="Donate Paypal"></a>
 </p>
 
@@ -48,11 +49,13 @@ If you are interested, [check out](https://hub.docker.com/r/crazymax/) my other 
 
 ### Ports
 
-* `80` : Jetbrains License Server HTTP port
+* `8000` : Jetbrains License Server HTTP port
 
-## Usage
+## Use this image
 
-Docker compose is the recommended way to run this image. You can use the following [docker compose template](docker/docker-compose.yml), then run the container :
+### Docker Compose
+
+Docker compose is the recommended way to run this image. Copy the content of folder [examples/compose](examples/compose) in `/var/jls/` on your host for example. Edit the compose and env files with your preferences and run the following commands :
 
 ```bash
 touch acme.json
@@ -61,10 +64,12 @@ docker-compose up -d
 docker-compose logs -f
 ```
 
-Or use the following minimal command :
+### Command line
+
+You can also use the following minimal command :
 
 ```bash
-$ docker run -d -p 8000:80 --name jetbrains-license-server \
+$ docker run -d -p 8000:8000 --name jetbrains_license_server \
   -e TZ="Europe/Paris" \
   -e JLS_VIRTUAL_HOSTS=jetbrains-license-server.example.com \
   -v $(pwd)/data:/data \
@@ -94,9 +99,9 @@ Passed value of header "Host" is not allowed. Please contact your license server
 
 That's because the license server is running behind a reverse proxy. Please configure virtual hosts using the `JLS_VIRTUAL_HOSTS` variable.
 
-## How can i help ?
+## How can I help ?
 
-All kinds of contributions are welcomed :raised_hands:!<br />
+All kinds of contributions are welcome :raised_hands:!<br />
 The most basic way to show your support is to star :star2: the project, or to raise issues :speech_balloon:<br />
 But we're not gonna lie to each other, I'd rather you buy me a beer or two :beers:!
 
